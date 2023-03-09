@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
+  <head>
     <title>Code Editor</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.min.css" integrity="sha512-QNl+JSyaQ7V65stWf+b4q3z4IG4a2IvzliPZSsgPn5R5iXoh1E5nCDp36z1ukjJZZf5bZnE8wOC+w2FiknnHxA==" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-5GpVi5iKmG/VbzA5zZfeMkREJc8teikQrhK0aIyvX0WmGMH7h2JeMYcLgoTzwTAsW1T8G6Uayg6Uy+6X9W6K8w==" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div id="editor"></div>
-    <div id="error"></div>
-    <script src="app.js"></script>
-</body>
+    <link rel="stylesheet" href="https://codemirror.net/lib/codemirror.css">
+    <script src="https://codemirror.net/lib/codemirror.js"></script>
+    <script src="https://codemirror.net/mode/javascript/javascript.js"></script>
+  </head>
+  <body>
+    <textarea id="code"></textarea>
+    <button onclick="run()">Run</button>
+    <div id="output"></div>
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        mode: "javascript"
+      });
+      function run() {
+        var code = editor.getValue();
+        try {
+          var output = eval(code);
+          document.getElementById("output").innerHTML = String(output);
+        } catch (error) {
+          document.getElementById("output").innerHTML = error.toString();
+        }
+      }
+    </script>
+  </body>
 </html>
